@@ -1,12 +1,27 @@
-# app_srh
+# Aplicativo Sr.H
 
-A new Flutter project.
+### Um pouco sobre o projeto.
+Sr. health: Surgiu em uma conversa com uma professora do Técnico de Enfermagem em que a equipe conversando foi citado a dificuldade com o gerenciamento de prontuário em algumas instituições de saúde, sendo assim a equipe se reuniu com a professora para pegar todos os detalhes e começar a pensar no funcionamento.    
 
-## Getting Started
+## Ideia
+Decidimos realizar uma aplicação mobile, portanto, se tornaria prático na hora da movimentação, não sendo necessário retornar ao computador para realizar uma anotação/marcação. Desta forma, médicos, enfermeiros... Teriam um dispositivo com sigo para rodar o aplicativo é assim podendo carregar um prontuário digital. 
 
-This project is a starting point for a Flutter application.
+## Ferramentas é Linguagem
+- VS Code;
+- Flutter;
+- Dart.
+  
+# Documentos
 
-A few resources to get you started if this is your first Flutter project:
+### Modelo Canvas
+![yjg](https://github.com/Gomesgaab/Sr.H/assets/126662305/deea2814-2edd-4e35-9677-62eaaf2b7749)
+
+### EAP - Estrutura Analítica de Projeto
+<img width="4992" alt="EAP Sr H" src="https://github.com/Gomesgaab/Sr.H/assets/126662305/f730451e-b867-42b0-ba68-e2898bd124cb">
+
+
+
+
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
