@@ -12,6 +12,10 @@ class TelaCadastro extends StatefulWidget {
 class _TelaCadastroState extends State<TelaCadastro> {
   //Shared
   late SharedPreferences storage;
+  final chave_name = "chave_Name";
+  final chave_email = "chave_Email";
+  final chave_cpf = "chave_Cepf";
+  final chave_telefone = "chave_Telefone";
   //crirando uma variavel de controle de nome
   TextEditingController nomeControler = TextEditingController();
   //crirando uma variavel de controle de email
@@ -157,7 +161,18 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                       MaterialStateColor.resolveWith((states) =>
                                           // ignore: prefer_const_constructors
                                           Color.fromARGB(255, 176, 215, 233))),
-                              onPressed: () {},
+                              onPressed: () async {
+                                await storage.setString(
+                                    chave_name, nomeControler.text);
+                                await storage.setString(
+                                    chave_telefone, telefoneControler.text);
+                                await storage.setString(
+                                    chave_email, emailControler.text);
+                                await storage.setString(
+                                    chave_email, emailConfirmControler.text);
+                                await storage.setString(
+                                    chave_cpf, cpfControler.text);
+                              },
                               child: const Text(
                                 "Finalizar",
                                 style: TextStyle(color: Colors.black),
