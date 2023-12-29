@@ -1,5 +1,6 @@
 import 'package:app_srh/pages/Logn_Cadastro/cadastro_page.dart';
 import 'package:app_srh/pages/pages_Home/main_page.dart';
+import 'package:app_srh/pages/service/storage_app.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,23 +11,38 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
-  var emailControler =
-      TextEditingController(text: "gabrielgabiga870@gmail.com");
-  var senhaControler = TextEditingController(text: "senha");
+  var emailControler = TextEditingController();
+  var senhaControler = TextEditingController();
   bool isObscureText = true;
+
+  AppStorage storage = AppStorage();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    carregarDados();
+  }
+
+  carregarDados() async {
+    senhaControler.text = await storage.getDadoSenha();
+    emailControler.text = await storage.getDadosLoginEmail();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        // alterando cor de fundo da tela inteira
         backgroundColor: const Color.fromARGB(255, 188, 218, 232),
-        // alterando cor de fundo do corpo
         // responsividade
         body: ListView(
           children: [
             Container(
               decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('asset/fundoLogin.webp'),
+                      image: AssetImage('asset/loginimage.png'),
                       fit: BoxFit.cover)),
               child: ConstrainedBox(
                 constraints: BoxConstraints(
@@ -63,25 +79,6 @@ class _LoginPage extends State<LoginPage> {
                       margin: const EdgeInsets.symmetric(vertical: 60),
                       height: 100,
                       width: double.infinity,
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.health_and_safety_sharp,
-                                size: 40,
-                                color: Colors.white,
-                              ),
-                              Text(
-                                "Login",
-                                style: TextStyle(fontSize: 50),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
                     ),
                     // conteiner do email
                     Expanded(
@@ -106,10 +103,10 @@ class _LoginPage extends State<LoginPage> {
                           decoration: const InputDecoration(
                             enabledBorder: OutlineInputBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(25)),
+                                    BorderRadius.all(Radius.circular(20)),
                                 borderSide: BorderSide(
                                     color: Color.fromARGB(255, 200, 228, 232))),
-                            fillColor: Color.fromARGB(190, 200, 228, 232),
+                            fillColor: Color.fromARGB(255, 200, 228, 232),
                             filled: true,
                             //Arrumando borda e deixando so linha inferior
                             hintText: "Email",
@@ -155,13 +152,16 @@ class _LoginPage extends State<LoginPage> {
                                       BorderRadius.all(Radius.circular(25)),
                                   borderSide: BorderSide(
                                       color:
+                                          // cor da borda do imput
                                           Color.fromARGB(255, 200, 228, 232))),
                               fillColor:
-                                  const Color.fromARGB(190, 200, 228, 232),
+                                  //cor de fundo
+                                  const Color.fromARGB(255, 200, 228, 232),
+                              //permitindo cor de fundo
                               filled: true,
                               contentPadding:
                                   const EdgeInsets.only(top: 0, left: 10),
-                              //Arrumando borda
+                              //cor icon
                               iconColor: Colors.white,
                               icon: const Icon(Icons.lock),
                               //estamos detectando ações para executar algo
@@ -169,6 +169,7 @@ class _LoginPage extends State<LoginPage> {
                                 //um clique
                                 onTap: () {
                                   setState(() {
+                                    //escondendo texto
                                     isObscureText = !isObscureText;
                                   });
                                 },
@@ -181,6 +182,7 @@ class _LoginPage extends State<LoginPage> {
                         ),
                       ),
                     ),
+                    // espaçamento
                     const SizedBox(
                       height: 30,
                     ),
@@ -194,15 +196,18 @@ class _LoginPage extends State<LoginPage> {
                           width: 200,
                           child: TextButton(
                               // printando ingormações preencihas quando clicar no botão
-                              onPressed: () {
+                              onPressed: () async {
+                                //fechando teclado ao clicar no botão para evitar erros
+                                FocusManager.instance.primaryFocus?.unfocus();
+
                                 if (emailControler.text.trim() ==
                                         "gabrielgabiga870@gmail.com" &&
                                     senhaControler.text.trim() == "senha") {
                                   //mostrando mensagem a usuário se o logim foi efetuado com sucesso
                                   // ScaffoldMessenger.of(context).showSnackBar(
                                   //     const SnackBar(
-                                  //         content:
-                                  //             Text("Login efetuado com sucesso")));
+                                  //         content: Text(
+                                  //             "Login efetuado com sucesso")));
                                   //Navegação entre as pages
                                   Navigator.pushReplacement(
                                       context,
@@ -211,11 +216,30 @@ class _LoginPage extends State<LoginPage> {
                                               const MainPage()));
                                 } else {
                                   //mostrando mensagem a usuário se o logim foi efetuado
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text(
-                                              "Erro ao efetuar login, email ou senha incorretos")));
+                                  // ignore: use_build_context_synchronously
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) {
+                                        return AlertDialog(
+                                          title: const Text("Erro"),
+                                          content: const Text(
+                                              " email ou senha incorreto"),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text("Fechar"))
+                                          ],
+                                        );
+                                      });
                                 }
+                                //assim que e apertado o botão entrar e guardado em cache os dados
+                                //chamando a chave para armazenamento dos dados em cache
+                                await storage
+                                    .setDadosLoginEmail(emailControler.text);
+                                await storage
+                                    .setDadosLoginSenha(senhaControler.text);
                               },
                               style: ButtonStyle(
                                   //border radios do botão
@@ -235,7 +259,7 @@ class _LoginPage extends State<LoginPage> {
                               )),
                         )),
                     // espacamento
-                    SizedBox(height: 30, child: Container()),
+                    SizedBox(height: 20, child: Container()),
                     // fim botão entrar
 
                     TextButton(
@@ -250,7 +274,7 @@ class _LoginPage extends State<LoginPage> {
                         "Não possui conta? Criar Conta",
                         style: TextStyle(
                           color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 18,
+                          fontSize: 20,
                           fontWeight: FontWeight.w200,
                         ),
                       ),

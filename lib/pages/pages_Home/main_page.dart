@@ -18,7 +18,7 @@ class _MainPageState extends State<MainPage> {
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 120,
-          backgroundColor: const Color.fromARGB(116, 155, 194, 1000),
+          backgroundColor: const Color.fromARGB(26, 155, 194, 232),
           actions: [
             // logo
             Image.asset(
@@ -26,17 +26,26 @@ class _MainPageState extends State<MainPage> {
               height: 67.6,
             ),
             const SizedBox(
-              width: 50,
+              width: 10,
+            ),
+            const Text(
+              "Sr .H",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(
+              width: 40,
             ),
           ],
         ),
-
-        //menu lateral
         drawer: const CustonMenu(),
+        //menu lateral
         //construindo body/corpo
         body: Expanded(
           child: Container(
-            color: const Color.fromARGB(116, 155, 194, 1000),
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('asset/fundo_home.png'),
+                    fit: BoxFit.cover)),
           ),
         ),
 
@@ -47,7 +56,7 @@ class _MainPageState extends State<MainPage> {
             Icon(Icons.home_filled, size: 30),
             Icon(Icons.list, size: 30)
           ],
-          backgroundColor: const Color.fromARGB(116, 155, 194, 1000),
+          backgroundColor: const Color.fromARGB(113, 149, 175, 201),
           index: index,
           height: 70,
           onTap: (index) => setState(() {

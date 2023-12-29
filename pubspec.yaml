@@ -38,6 +38,8 @@ dependencies:
   shared_preferences: ^2.2.2
   google_fonts: ^6.1.0
   curved_navigation_bar: ^1.0.3
+  sqflite: ^2.3.0
+  path: ^1.8.3
 
 
 dev_dependencies:

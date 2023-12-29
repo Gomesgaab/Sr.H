@@ -1,6 +1,6 @@
 import 'package:app_srh/pages/paginacao/card_page.dart';
-import 'package:app_srh/pages/service/repository/linguagens_repository.dart';
-import 'package:app_srh/pages/service/repository/nivel_repository.dart';
+import 'package:app_srh/repository/linguagens_repository.dart';
+import 'package:app_srh/repository/nivel_repository.dart';
 import 'package:flutter/material.dart';
 
 class DadosPaciente extends StatefulWidget {

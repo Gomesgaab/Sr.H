@@ -1,6 +1,7 @@
 import 'package:app_srh/pages/configuracao_page.dart';
 import 'package:app_srh/pages/dados_page.dart';
 import 'package:app_srh/pages/Logn_Cadastro/login_page.dart';
+import 'package:app_srh/pages/paginacao/dados_page.dart';
 import 'package:flutter/material.dart';
 
 class CustonMenu extends StatelessWidget {
@@ -68,7 +69,10 @@ class CustonMenu extends StatelessWidget {
               ),
             ),
             //efeito de clic
-            onTap: () {},
+            onTap: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const DadosPage()));
+            },
           ),
           const Divider(),
           //tamanho da caixa
