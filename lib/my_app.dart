@@ -12,6 +12,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             //PrimaryColor (cor principal da aplicação)
             //Fonte/estilo de texto principal
+            useMaterial3: true,
+            primaryColor: const Color.fromARGB(145, 200, 228, 1000),
             textTheme: GoogleFonts.abhayaLibreTextTheme()),
         home: const LoginPage());
   }

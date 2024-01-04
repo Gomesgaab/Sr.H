@@ -1,4 +1,3 @@
-import 'package:app_srh/model/cadastro_model.dart';
 import 'package:app_srh/pages/Logn_Cadastro/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -11,8 +10,6 @@ class TelaCadastro extends StatefulWidget {
 
 class _TelaCadastroState extends State<TelaCadastro> {
   //Shared
-
-  var cadastro = const <CadastroSqliteModel>[];
 
   //crirando uma variavel de controle de nome
   var nomeControler = TextEditingController();
@@ -32,17 +29,6 @@ class _TelaCadastroState extends State<TelaCadastro> {
       style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w500),
     );
   } */
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    obterDados();
-  }
-
-  obterDados() async {
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -276,7 +262,6 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                                     255, 176, 215, 233))),
                                     //ação ao apertar button
                                     onPressed: () async {
-                                      obterDados();
                                       setState(() {});
                                     },
                                     child: const Text(

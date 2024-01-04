@@ -1,3 +1,4 @@
+import 'package:app_srh/pages/paginacao/prontuario_page.dart';
 import 'package:app_srh/shared/componentes/menu_custon.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int index = 1;
+  PageController controller = PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
     //area  separada
@@ -41,11 +42,17 @@ class _MainPageState extends State<MainPage> {
         //menu lateral
         //construindo body/corpo
         body: Expanded(
-          child: Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('asset/fundo_home.png'),
-                    fit: BoxFit.cover)),
+          child: PageView(
+            controller: controller,
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('asset/fundo_home.png'),
+                        fit: BoxFit.cover)),
+              ),
+              const PageProntuario(),
+            ],
           ),
         ),
 
@@ -56,11 +63,10 @@ class _MainPageState extends State<MainPage> {
             Icon(Icons.home_filled, size: 30),
             Icon(Icons.list, size: 30)
           ],
-          backgroundColor: const Color.fromARGB(113, 149, 175, 201),
-          index: index,
+          backgroundColor: const Color.fromARGB(122, 149, 175, 201),
           height: 70,
-          onTap: (index) => setState(() {
-            this.index = index;
+          onTap: (value) => setState(() {
+            controller.jumpToPage(value);
           }),
         ),
       ),
