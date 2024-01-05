@@ -1,6 +1,5 @@
 import 'package:app_srh/pages/Logn_Cadastro/cadastro_page.dart';
 import 'package:app_srh/pages/pages_Home/main_page.dart';
-import 'package:app_srh/pages/service/storage_app.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,21 +13,6 @@ class _LoginPage extends State<LoginPage> {
   var emailControler = TextEditingController();
   var senhaControler = TextEditingController();
   bool isObscureText = true;
-
-  AppStorage storage = AppStorage();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    carregarDados();
-  }
-
-  carregarDados() async {
-    senhaControler.text = await storage.getDadoSenha();
-    emailControler.text = await storage.getDadosLoginEmail();
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -234,12 +218,6 @@ class _LoginPage extends State<LoginPage> {
                                         );
                                       });
                                 }
-                                //assim que e apertado o botão entrar e guardado em cache os dados
-                                //chamando a chave para armazenamento dos dados em cache
-                                await storage
-                                    .setDadosLoginEmail(emailControler.text);
-                                await storage
-                                    .setDadosLoginSenha(senhaControler.text);
                               },
                               style: ButtonStyle(
                                   //border radios do botão

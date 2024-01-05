@@ -1,4 +1,4 @@
-import 'package:app_srh/model/prontuariomodel.dart';
+/* import 'package:app_srh/model/prontuariomodel';
 
 class ProntuarioRepositori {
   final List<ProntuarioModel> _prontuari = [];
@@ -20,3 +20,4 @@ class ProntuarioRepositori {
     return _prontuari;
   }
 }
+ */

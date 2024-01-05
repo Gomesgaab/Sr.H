@@ -51,7 +51,7 @@ class _MainPageState extends State<MainPage> {
                         image: AssetImage('asset/fundo_home.png'),
                         fit: BoxFit.cover)),
               ),
-              const PageProntuario(),
+              PageProntuario(),
             ],
           ),
         ),

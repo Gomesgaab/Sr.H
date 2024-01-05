@@ -1,5 +1,5 @@
 import 'package:app_srh/model/prontuariomodel.dart';
-import 'package:app_srh/repository/prontuario_repositori.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class PageProntuario extends StatefulWidget {
@@ -10,30 +10,38 @@ class PageProntuario extends StatefulWidget {
 }
 
 class _PageProntuarioState extends State<PageProntuario> {
-  var prontuarioRepository = ProntuarioRepositori();
-  var _prontuario = const <ProntuarioModel>[];
+  final db = FirebaseFirestore.instance;
+  //var prontuarioRepository = ProntuarioRepositori();
+  // var _prontuario = const <ProntuarioModel>[];
   var datacontole = TextEditingController(text: "");
-  DateTime? dataNacimento;
+  var dataNacimento = "";
   var cnscontrol = TextEditingController();
   var nomeControle = TextEditingController();
   var sexoControle = TextEditingController();
-  var fcControle = TextEditingController();
+  var fcControle = TextEditingController(text: "");
   var paControle = TextEditingController();
   var taxControle = TextEditingController();
   var rControle = TextEditingController();
   var dxControle = TextEditingController();
   var sintomasControle = TextEditingController();
+  var anamneseControler = TextEditingController();
+  var prescricaoMedicaControler = TextEditingController();
+  var prescricaoEnfermagemControler = TextEditingController();
+  var horarioControler = TextEditingController();
+  var anotacaoEnfermagemControler = TextEditingController();
+
+  bool salvando = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    listarProntuarios();
+    //listarProntuarios();
   }
 
-  void listarProntuarios() async {
+  /* void listarProntuarios() async {
     _prontuario = await prontuarioRepository.visualizarProntuario();
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -42,30 +50,68 @@ class _PageProntuarioState extends State<PageProntuario> {
         decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('asset/fundo_home.png'), fit: BoxFit.cover)),
-        child: ListView.builder(
-          itemCount: _prontuario.length,
-          itemBuilder: (BuildContext bc, int index) {
-            var prontuario = _prontuario[index];
-            return Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: const Color.fromARGB(255, 200, 228, 1000)),
-                margin: const EdgeInsets.all(15),
-                child: Container(
-                  margin: const EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(prontuario.id.toString()),
-                      Text(prontuario.cns),
-                      Text(prontuario.nome),
-                      Text(prontuario.sexo),
-                      Text(prontuario.dtNacimento.toString())
-                    ],
-                  ),
-                ));
-          },
-        ),
+        child: StreamBuilder<QuerySnapshot>(
+            stream: db.collection("Prontuario").snapshots(),
+            builder: (context, snapshot) {
+              return !snapshot.hasData
+                  ? const CircularProgressIndicator()
+                  : ListView(
+                      children: snapshot.data!.docs.map((e) {
+                      var prontuario = ProntuarioModel.fromJson(
+                          (e.data() as Map<String, dynamic>));
+                      return Container(
+                        decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 200, 228, 1000),
+                            borderRadius: BorderRadius.circular(18)),
+                        margin: const EdgeInsets.all(15),
+                        child: Container(
+                          margin: const EdgeInsets.all(10),
+                          child: Dismissible(
+                              onDismissed:
+                                  (DismissDirection dismissDirectio) async {},
+                              key: Key(e.id),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(prontuario.cns),
+                                  Text(prontuario.nome),
+                                  Row(
+                                    children: [
+                                      Text(prontuario.dtNacimento.toString()),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Text(prontuario.sexo),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(prontuario.fc!),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Text(prontuario.pa!),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Text(prontuario.tax!),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Text(prontuario.r!),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Text(prontuario.dx!),
+                                    ],
+                                  ),
+                                  Text(prontuario.sintomas!),
+                                ],
+                              )),
+                        ),
+                      );
+                    }).toList());
+            }),
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -120,7 +166,7 @@ class _PageProntuarioState extends State<PageProntuario> {
                                       lastDate: DateTime(2023, 12, 31));
                                   if (data != null) {
                                     datacontole.text = data.toString();
-                                    dataNacimento = data;
+                                    dataNacimento = data.timeZoneName;
                                   }
                                 },
                               ),
@@ -154,39 +200,46 @@ class _PageProntuarioState extends State<PageProntuario> {
                         ),
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 0),
-                          child: const Row(
+                          child: Row(
                             children: [
                               SizedBox(
                                 width: 50,
                                 child: TextField(
-                                  decoration: InputDecoration(hintText: "FC:"),
+                                  controller: fcControle,
+                                  decoration:
+                                      const InputDecoration(hintText: "FC:"),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 25,
                               ),
                               SizedBox(
                                 width: 50,
                                 child: TextField(
-                                  decoration: InputDecoration(hintText: "PA:"),
+                                  controller: paControle,
+                                  decoration:
+                                      const InputDecoration(hintText: "PA:"),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 25,
                               ),
                               SizedBox(
                                 width: 50,
                                 child: TextField(
-                                  decoration: InputDecoration(hintText: "TAx:"),
+                                  controller: taxControle,
+                                  decoration:
+                                      const InputDecoration(hintText: "TAx:"),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 25,
                               ),
                               SizedBox(
                                 width: 50,
                                 child: TextField(
-                                  decoration: InputDecoration(
+                                  controller: rControle,
+                                  decoration: const InputDecoration(
                                     hintText: "R:",
                                   ),
                                 ),
@@ -194,21 +247,23 @@ class _PageProntuarioState extends State<PageProntuario> {
                             ],
                           ),
                         ),
-                        const Row(
+                        Row(
                           children: [
                             SizedBox(
                               width: 100,
                               child: TextField(
-                                decoration: InputDecoration(
+                                controller: dxControle,
+                                decoration: const InputDecoration(
                                   hintText: "DX:",
                                 ),
                               ),
                             ),
-                            SizedBox(width: 25),
+                            const SizedBox(width: 25),
                             SizedBox(
                               width: 150,
                               child: TextField(
-                                decoration: InputDecoration(
+                                controller: sintomasControle,
+                                decoration: const InputDecoration(
                                   hintText: "Sintomas:",
                                 ),
                               ),
@@ -235,22 +290,40 @@ class _PageProntuarioState extends State<PageProntuario> {
                                 flex: 0,
                                 child: TextButton(
                                     onPressed: () async {
+                                      //fechando tela
                                       Navigator.pop(context);
-                                      await prontuarioRepository
-                                          .adicionarP(ProntuarioModel(
-                                        cnscontrol.text,
-                                        nomeControle.text,
-                                        DateTime.parse(datacontole.text),
-                                        sexoControle.text,
-                                        fcControle.text,
-                                        paControle.text,
-                                        taxControle.text,
-                                        rControle.text,
-                                        dxControle.text,
-                                        sexoControle.text,
-                                        false,
-                                      ));
-                                      setState(() {});
+                                      //coletando e enviando dados ao bd
+                                      var prontuario = ProntuarioModel(
+                                          cns: cnscontrol.text,
+                                          nome: nomeControle.text,
+                                          dtNacimento:
+                                              DateTime.parse(datacontole.text),
+                                          sexo: sexoControle.text,
+                                          fc: fcControle.text,
+                                          pa: paControle.text,
+                                          tax: taxControle.text,
+                                          r: rControle.text,
+                                          dx: dxControle.text,
+                                          sintomas: sintomasControle.text,
+                                          anamnese: anamneseControler.text,
+                                          prescricaoMedica:
+                                              prescricaoMedicaControler.text,
+                                          prescricaoEnfermagem:
+                                              prescricaoEnfermagemControler
+                                                  .text,
+                                          horario: horarioControler.text,
+                                          anotacaoEnfermagem:
+                                              anotacaoEnfermagemControler.text,
+                                          salvar: false);
+                                      await db
+                                          .collection("Prontuario")
+                                          .add(prontuario.toJson());
+                                      //limpando variaveis
+
+                                      cnscontrol.text = "";
+                                      nomeControle.text = "";
+                                      sexoControle.text = "";
+                                      datacontole.text = "";
                                     },
                                     child: const Text("Salvar")),
                               )

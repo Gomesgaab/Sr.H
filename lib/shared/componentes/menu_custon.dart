@@ -1,4 +1,3 @@
-import 'package:app_srh/pages/configuracao_page.dart';
 import 'package:app_srh/pages/dados_page.dart';
 import 'package:app_srh/pages/Logn_Cadastro/login_page.dart';
 import 'package:app_srh/pages/paginacao/dados_page.dart';
@@ -111,33 +110,6 @@ class CustonMenu extends StatelessWidget {
                   //definindo qual a rota do material a ser puxada
                   MaterialPageRoute(
                       builder: (context) => const DadosPaciente()));
-            },
-          ),
-          //linha de divisão
-          const Divider(),
-          InkWell(
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Row(
-                children: [
-                  Icon(Icons.engineering_rounded),
-                  //distanciando icon do texto
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    "Configurações",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-            ),
-            //efeito de clic/ação ao clicar
-            onTap: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (contex) => const ConfiguracaoPage()));
             },
           ),
           //divisoria

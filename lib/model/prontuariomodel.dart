@@ -1,99 +1,78 @@
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProntuarioModel {
-  final String _id = UniqueKey().toString();
-  String _cns = "";
-  String _nome = "";
-  DateTime _dtNacimento;
-  String _sexo = "";
-  String _fc = "";
-  String _pa = "";
-  String _tax = "";
-  String _r = "";
-  String _dx = "";
-  String _sintomas = "";
-  bool _salvar = false;
+  String cns = "";
+  String nome = "";
+  DateTime dtNacimento = DateTime.now();
+  String sexo = "";
+  String? fc = "";
+  String? pa;
+  String? tax;
+  String? r;
+  String? dx;
+  String? sintomas;
+  String? anamnese;
+  String? prescricaoMedica;
+  String? prescricaoEnfermagem;
+  String? horario = "";
+  String? anotacaoEnfermagem;
+  bool salvar = false;
 
   ProntuarioModel(
-      this._cns,
-      this._nome,
-      this._dtNacimento,
-      this._sexo,
-      this._fc,
-      this._pa,
-      this._tax,
-      this._r,
-      this._dx,
-      this._sintomas,
-      this._salvar);
+      {required this.cns,
+      required this.nome,
+      required this.dtNacimento,
+      required this.sexo,
+      this.fc,
+      this.pa,
+      this.tax,
+      this.r,
+      this.dx,
+      this.sintomas,
+      this.anamnese,
+      this.prescricaoMedica,
+      this.prescricaoEnfermagem,
+      this.horario,
+      this.anotacaoEnfermagem,
+      required this.salvar});
 
-  //gets
-  String get id => _id;
-
-  String get cns => _cns;
-
-  String get nome => _nome;
-
-  DateTime get dtNacimento => _dtNacimento;
-
-  String get sexo => _sexo;
-
-  String get fc => _fc;
-
-  String get pa => _pa;
-
-  String get tax => _tax;
-
-  String get r => _r;
-
-  String get dx => _dx;
-
-  String get sintomas => _sintomas;
-
-  bool get salvar => _salvar;
-
-  //Sets
-  set cons(String cns) {
-    _cns = cns;
+  ProntuarioModel.fromJson(Map<String, dynamic> json) {
+    cns = json['cns'];
+    nome = json['nome'];
+    dtNacimento = (json['dtNacimento'] as Timestamp).toDate();
+    sexo = json['sexo'];
+    fc = json['fc'];
+    pa = json['pa'];
+    tax = json['tax'];
+    r = json['r'];
+    dx = json['dx'];
+    sintomas = json['sintomas'];
+    anamnese = json['anamnese'];
+    prescricaoMedica = json['prescricaoMedica'];
+    prescricaoEnfermagem = json['prescricaoEnfermagem'];
+    horario = json['horario'];
+    anotacaoEnfermagem = json['anotacaoEnfermagem'];
+    salvar = json['salvar'];
   }
 
-  set nome(String nome) {
-    _nome = nome;
-  }
-
-  set dtNacimento(DateTime dtNacimento) {
-    _dtNacimento = dtNacimento;
-  }
-
-  set sexo(String sexo) {
-    _sexo = sexo;
-  }
-
-  set fc(String fc) {
-    _fc = fc;
-  }
-
-  set pa(String pa) {
-    _pa = pa;
-  }
-
-  set tax(String tax) {
-    _tax = tax;
-  }
-
-  set r(String r) {
-    _r = r;
-  }
-
-  set dx(String dx) {
-    _dx = dx;
-  }
-
-  set sintomas(String sintomas) {
-    _sintomas = sintomas;
-  }
-
-  set salvar(bool salvar) {
-    _salvar = salvar;
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['cns'] = this.cns;
+    data['nome'] = this.nome;
+    data['dtNacimento'] = Timestamp.fromDate(this.dtNacimento);
+    data['sexo'] = this.sexo;
+    data['fc'] = this.fc;
+    data['pa'] = this.pa;
+    data['tax'] = this.tax;
+    data['r'] = this.r;
+    data['dx'] = this.dx;
+    data['sintomas'] = this.sintomas;
+    data['anamnese'] = this.anamnese;
+    data['prescricaoMedica'] = this.prescricaoMedica;
+    data['prescricaoEnfermagem'] = this.prescricaoEnfermagem;
+    data['horario'] = this.horario;
+    data['anotacaoEnfermagem'] = this.anotacaoEnfermagem;
+    data['salvar'] = this.salvar;
+    return data;
   }
 }
