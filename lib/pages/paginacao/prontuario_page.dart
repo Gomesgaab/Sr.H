@@ -11,8 +11,7 @@ class PageProntuario extends StatefulWidget {
 
 class _PageProntuarioState extends State<PageProntuario> {
   final db = FirebaseFirestore.instance;
-  //var prontuarioRepository = ProntuarioRepositori();
-  // var _prontuario = const <ProntuarioModel>[];
+
   var datacontole = TextEditingController(text: "");
   var dataNacimento = "";
   var cnscontrol = TextEditingController();
@@ -36,12 +35,7 @@ class _PageProntuarioState extends State<PageProntuario> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    //listarProntuarios();
   }
-
-  /* void listarProntuarios() async {
-    _prontuario = await prontuarioRepository.visualizarProntuario();
-  } */
 
   @override
   Widget build(BuildContext context) {

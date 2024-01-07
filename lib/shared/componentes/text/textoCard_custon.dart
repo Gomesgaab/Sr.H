@@ -11,9 +11,9 @@ final class Textedition extends StatelessWidget {
       child: Text(
         texto,
         style: const TextStyle(
-          fontSize: 20,
+          fontSize: 18,
           fontWeight: FontWeight.w500,
-          color: Color.fromRGBO(70, 130, 169, 1),
+          color: Color.fromRGBO(0, 0, 0, 1),
         ),
       ),
     );

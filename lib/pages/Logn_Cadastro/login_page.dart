@@ -1,5 +1,5 @@
-import 'package:app_srh/pages/Logn_Cadastro/cadastro_page.dart';
 import 'package:app_srh/pages/pages_Home/main_page.dart';
+import 'package:app_srh/pages/pages_Home/main_pageAdmin.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -197,26 +197,13 @@ class _LoginPage extends State<LoginPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const MainPage()));
+                                              const MainPageAdmin()));
                                 } else {
-                                  //mostrando mensagem a usuário se o logim foi efetuado
-                                  // ignore: use_build_context_synchronously
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return AlertDialog(
-                                          title: const Text("Erro"),
-                                          content: const Text(
-                                              " email ou senha incorreto"),
-                                          actions: [
-                                            TextButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: const Text("Fechar"))
-                                          ],
-                                        );
-                                      });
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const MainPage()));
                                 }
                               },
                               style: ButtonStyle(
@@ -240,23 +227,6 @@ class _LoginPage extends State<LoginPage> {
                     SizedBox(height: 20, child: Container()),
                     // fim botão entrar
 
-                    TextButton(
-                      onPressed: () {
-                        //Navegação entre as página cadastro
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const TelaCadastro()));
-                      },
-                      child: const Text(
-                        "Não possui conta? Criar Conta",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w200,
-                        ),
-                      ),
-                    ),
                     const SizedBox(height: 80),
                   ],
                 ),
